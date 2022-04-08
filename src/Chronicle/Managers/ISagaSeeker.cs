@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Chronicle.Managers
 {
-    internal interface ISagaSeeker
+    public interface ISagaSeeker
     {
         IEnumerable<ISagaAction<TMessage>> Seek<TMessage>();
     }

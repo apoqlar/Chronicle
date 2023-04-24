@@ -1,0 +1,28 @@
+name: Build&Pack&Push nuget packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+    - name: Install Nuget 5.X
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore 
+    - name: Pack package
+      run: dotnet pack --configuration Release
+    - name: Print directory
+      run: ls -R 
+    - name: Publish package
+      run: dotnet nuget push "./src/Chronicle/bin/Release/*.nupkg" --source "github" -k ${{secrets.GITHUB_TOKEN}}

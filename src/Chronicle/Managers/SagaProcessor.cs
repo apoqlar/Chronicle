@@ -48,6 +48,10 @@ namespace Chronicle.Managers
             }
         }
 
+        public async Task ProcessAsync<TMessage>(ISaga saga, TMessage message, ISagaState state, ISagaContext context)
+            where TMessage : class =>
+            await ProcessAsync(saga, message, state, context, null);
+
         private async Task UpdateSagaAsync<TMessage>(TMessage message, ISaga saga, ISagaState state)
             where TMessage : class
         {

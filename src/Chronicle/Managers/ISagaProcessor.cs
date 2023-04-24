@@ -11,5 +11,11 @@ namespace Chronicle.Managers
             ISagaState state,
             ISagaContext context,
             Func<ISaga, TMessage, ISagaState, ISagaContext, Task>? onCompleteAsync = null) where TMessage : class;
+
+        Task ProcessAsync<TMessage>(
+            ISaga saga,
+            TMessage message,
+            ISagaState state,
+            ISagaContext context) where TMessage : class;
     }
 }

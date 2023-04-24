@@ -25,4 +25,4 @@ jobs:
     - name: Print directory
       run: ls -R 
     - name: Publish package
-      run: dotnet nuget push "./src/Chronicle/bin/Release/*.nupkg" --source "github" -k ${{secrets.GITHUB_TOKEN}}
+      run: dotnet nuget push "./src/Chronicle/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/apoqlar/index.json" -k ${{secrets.GITHUB_TOKEN}}

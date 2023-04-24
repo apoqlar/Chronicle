@@ -15,8 +15,12 @@ namespace Chronicle.Managers
             _log = log;
         }
 
-        public async Task ProcessAsync<TMessage>(ISaga saga, TMessage message, ISagaState state,
-            ISagaContext context) where TMessage : class
+        public async Task ProcessAsync<TMessage>(
+            ISaga saga,
+            TMessage message,
+            ISagaState state,
+            ISagaContext context,
+            Func<ISaga, TMessage, ISagaState, ISagaContext, Task>? onCompleteAsync = null) where TMessage : class
         {
             var action = (ISagaAction<TMessage>)saga;
 
@@ -35,6 +39,11 @@ namespace Chronicle.Managers
             }
             finally
             {
+                if (onCompleteAsync != null)
+                {
+                    await onCompleteAsync(saga, message, state, context);
+                }
+
                 await UpdateSagaAsync(message, saga, state);
             }
         }

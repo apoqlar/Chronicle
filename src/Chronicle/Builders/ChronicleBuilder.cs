@@ -1,3 +1,4 @@
+using System;
 using Chronicle.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,16 @@ namespace Chronicle.Builders
         {
             Services.AddSingleton(typeof(ISagaStateRepository), typeof(InMemorySagaStateRepository));
             Services.AddSingleton(typeof(ISagaLog), typeof(InMemorySagaLog));
+            return this;
+        }
+
+        public IChronicleBuilder UsePersistence<TSagaStateRepository>(
+            Func<IServiceProvider, ISagaStateRepository> sagaStateRepositoryImplementationFactory,
+            Func<IServiceProvider, ISagaLog> sagaLogImplementationFactory)
+        {
+            Services.AddSingleton(sagaStateRepositoryImplementationFactory);
+            Services.AddSingleton(sagaLogImplementationFactory);
+
             return this;
         }
 

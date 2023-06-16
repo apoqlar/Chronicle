@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Persistence
 {
-    internal class InMemorySagaLog : ISagaLog
+    public class InMemorySagaLog : ISagaLog
     {
         private readonly List<ISagaLogData> _sagaLog;
 

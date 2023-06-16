@@ -18,7 +18,7 @@ namespace Chronicle.Builders
             return this;
         }
 
-        public IChronicleBuilder UsePersistence<TSagaStateRepository>(
+        public IChronicleBuilder UsePersistence(
             Func<IServiceProvider, ISagaStateRepository> sagaStateRepositoryImplementationFactory,
             Func<IServiceProvider, ISagaLog> sagaLogImplementationFactory)
         {

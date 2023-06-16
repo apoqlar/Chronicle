@@ -10,7 +10,7 @@ namespace Chronicle
         IChronicleBuilder UseSagaLog<TSagaLog>() where TSagaLog : ISagaLog;
         IChronicleBuilder UseSagaStateRepository<TRepository>() where TRepository : ISagaStateRepository;
 
-        public IChronicleBuilder UsePersistence<TSagaStateRepository>(
+        public IChronicleBuilder UsePersistence(
             Func<IServiceProvider, ISagaStateRepository> sagaStateRepositoryImplementationFactory,
             Func<IServiceProvider, ISagaLog> sagaLogImplementationFactory);
     }

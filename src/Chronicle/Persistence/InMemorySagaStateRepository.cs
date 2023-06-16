@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Chronicle.Persistence
 {
-    internal class InMemorySagaStateRepository : ISagaStateRepository
+    public class InMemorySagaStateRepository : ISagaStateRepository
     {
         private readonly List<ISagaState> _repository;
 

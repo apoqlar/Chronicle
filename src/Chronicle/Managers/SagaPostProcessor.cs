@@ -33,7 +33,7 @@ namespace Chronicle.Managers
         
         private async Task CompensateAsync(ISaga saga, Type sagaType, ISagaContext context)
         {
-            var sagaLogs = await _log.ReadAsync(saga.Id, sagaType);
+            var sagaLogs = await _log.ReadAsync(saga.Id);
             sagaLogs.OrderByDescending(l => l.CreatedAt)
                 .Select(l => l.Message)
                 .ToList()

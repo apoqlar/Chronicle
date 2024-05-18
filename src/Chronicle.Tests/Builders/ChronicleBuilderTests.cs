@@ -68,7 +68,7 @@ namespace Chronicle.Tests.Builders
 
         public class MySagaLog : ISagaLog
         {
-            public Task<IEnumerable<ISagaLogData>> ReadAsync(SagaId id, Type type)
+            public Task<IEnumerable<ISagaLogData>> ReadAsync(SagaId id)
             {
                 throw new NotImplementedException();
             }
@@ -81,7 +81,7 @@ namespace Chronicle.Tests.Builders
 
         public class MySagaStateRepository : ISagaStateRepository
         {
-            public Task<ISagaState> ReadAsync(SagaId id, Type type)
+            public Task<ISagaState> ReadAsync(SagaId id)
             {
                 throw new NotImplementedException();
             }

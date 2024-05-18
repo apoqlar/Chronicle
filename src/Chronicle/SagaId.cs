@@ -1,22 +1,24 @@
-﻿using System;
+using System;
 
 namespace Chronicle
 {
-    public struct SagaId
+    public readonly struct SagaId(Guid id)
     {
-        public string Id { get; }
+        public Guid Id => id;
 
-        private SagaId(string id)
-            => Id = id;
+        public static implicit operator Guid(SagaId sagaId) => sagaId.Id;
+        public static implicit operator SagaId(Guid sagaId) => new(sagaId);
 
-        public static implicit operator string(SagaId sagaId) => sagaId.Id;
+        public static bool operator ==(SagaId lhs, SagaId rhs) => lhs.Id == rhs.Id;
+        public static bool operator !=(SagaId lhs, SagaId rhs) => !(lhs == rhs);
 
-        public static implicit operator SagaId(string sagaId)
-            => new SagaId(sagaId);
+        public static SagaId NewSagaId() => new(Guid.NewGuid());
+        public static SagaId FromString(string str) =>
+            Guid.TryParse(str, out var guid) ? guid :
+            throw new ChronicleException("String for SagaId must be GUID.");
 
-        public static SagaId NewSagaId()
-            => new SagaId(Guid.NewGuid().ToString());
-
-        public override string ToString() => Id;
+        public override string ToString() => Id.ToString();
+        public override bool Equals(object obj) => obj is SagaId other && this == other;
+        public override int GetHashCode() => Id.GetHashCode();
     }
 }

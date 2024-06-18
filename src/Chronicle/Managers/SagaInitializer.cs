@@ -20,7 +20,7 @@ namespace Chronicle.Managers
             var sagaType = saga.GetType();
             var dataType = saga.GetSagaDataType();
             
-            var state = await _repository.ReadAsync(id, sagaType).ConfigureAwait(false);
+            var state = await _repository.ReadAsync(id).ConfigureAwait(false);
 
             if (state is null)
             {

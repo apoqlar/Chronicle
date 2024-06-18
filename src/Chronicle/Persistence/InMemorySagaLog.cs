@@ -1,23 +1,20 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Chronicle.Persistence
 {
     public class InMemorySagaLog : ISagaLog
     {
-        private readonly List<ISagaLogData> _sagaLog;
+        private readonly Dictionary<SagaId, List<ISagaLogData>> _sagaLog = [];
 
-        public InMemorySagaLog() 
-            => _sagaLog = new List<ISagaLogData>();
-
-        public Task<IEnumerable<ISagaLogData>> ReadAsync(SagaId id, Type type) 
-            => Task.FromResult(_sagaLog.Where(sld => sld.Id == id && sld.Type == type));
+        public Task<IEnumerable<ISagaLogData>> ReadAsync(SagaId id)
+            => Task.FromResult(_sagaLog.TryGetValue(id, out var value) ? (IEnumerable<ISagaLogData>)value : []);
 
         public async Task WriteAsync(ISagaLogData message)
         {
-            _sagaLog.Add(message);
+            if (!_sagaLog.TryGetValue(message.Id, out var log))
+                _sagaLog[message.Id] = log = [];
+            log.Add(message);
             await Task.CompletedTask;
         }
     }
